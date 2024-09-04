@@ -1,4 +1,8 @@
 import { useState } from "react";
+import Board from "./components/Board";
+import BoardHistory from "./components/BoardHistory";
+import Winner from "./components/Winner";
+import PlayerForm from "./components/PlayerForm";
 
 const winningCombinations = [
   [0, 1, 2],
@@ -39,6 +43,7 @@ const App = () => {
   const [board, setBoard] = useState(initialBoard);
   const { winner, winningSquares } = calculateWinner(board);
   const [started, setStarted] = useState(false);
+  const [history, setHistory] = useState([]);
 
   const nextPlayer =
     player == players.playerOne ? players.playerTwo : players.playerOne;
@@ -49,8 +54,6 @@ const App = () => {
     setPlayers((prev) => ({ ...prev, [inputName]: inputValue }));
   };
 
-  const isDisabled = () => !players.playerOne || !players.playerTwo;
-
   const handleClick = (index) => {
     if (board[index] || winner) {
       return;
@@ -58,12 +61,14 @@ const App = () => {
     const boardStatus = [...board];
     boardStatus[index] = player;
     setBoard(boardStatus);
+    setHistory((prev) => [...prev, { player, value: index }]);
     setPlayer(nextPlayer);
   };
 
   const resetGame = () => {
     setBoard(initialBoard);
     setStarted(true);
+    setHistory([]);
     setPlayer(Object.values(players)[Math.floor(Math.random(0, 1) * 2)]);
   };
 
@@ -73,58 +78,27 @@ const App = () => {
   };
   return (
     <>
-      {!started ? (
-        <form onSubmit={initGame}>
-          <label htmlFor="playerOne">Add player one</label>
-          <input
-            name="playerOne"
-            id="playerOne"
-            type="text"
-            value={players.playerOne}
-            onChange={addPlayer}
-          />
-          <label htmlFor="playerTwo">Add player two</label>
-          <input
-            name="playerTwo"
-            id="playerTwo"
-            type="text"
-            value={players.playerTwo}
-            onChange={addPlayer}
-          />
-          <button type="submit" disabled={isDisabled()}>
-            Start game!
-          </button>
-        </form>
-      ) : null}
+      <PlayerForm
+        started={started}
+        initGame={initGame}
+        players={players}
+        addPlayer={addPlayer}
+      />
 
       <section>
         <p>Current player {player}</p>
-        {board?.length > 0 ? (
-          <ul id="board">
-            {board.map((item, index) => (
-              <li className="square" key={index}>
-                <button
-                  className=""
-                  type="button"
-                  onClick={() => handleClick(index)}
-                >
-                  {item || index}
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <Board
+          board={board}
+          handleClick={handleClick}
+          winningSquares={winningSquares}
+        />
       </section>
-      {winner ? (
-        <section>
-          <p>
-            Congratulations {winner} with the {winningSquares} combination
-          </p>
-          <button type="button" onClick={resetGame}>
-            New game
-          </button>
-        </section>
-      ) : null}
+      <Winner
+        winner={winner}
+        winningSquares={winningSquares}
+        resetGame={resetGame}
+      />
+      <BoardHistory history={history} />
     </>
   );
 };
