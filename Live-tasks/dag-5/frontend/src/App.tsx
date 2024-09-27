@@ -16,11 +16,20 @@ function App() {
     { id: "3", name: "Tiril" },
   ]);
 
+  const onRemoveStudent = (id: string) => {
+    const updatedStudents = students.filter((student) => student.id !== id);
+    setStudents(updatedStudents);
+  };
+
   const total = students.length;
 
   return (
     <main>
-      <Grid students={students} setStudents={setStudents} />
+      <Grid
+        students={students}
+        setStudents={setStudents}
+        onRemoveStudent={onRemoveStudent}
+      />
       <Total total={total} />
     </main>
   );
