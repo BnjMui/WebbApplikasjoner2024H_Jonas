@@ -22,6 +22,7 @@ export default function Student(
     <div
       onMouseOver={updateShowState}
       onMouseLeave={() => setShowRemove(false)}
+      className="students"
     >
       <Avatar name={name} />
       <p className="student-name">{name}</p>
@@ -31,7 +32,7 @@ export default function Student(
           className="delete-btn"
           onClick={() => onRemoveStudent(id)}
         >
-          Delete
+          Remove
         </button>
       ) : null}
     </div>

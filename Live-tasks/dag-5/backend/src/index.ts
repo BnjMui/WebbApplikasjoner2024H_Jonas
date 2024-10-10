@@ -6,8 +6,8 @@ const app = new Hono();
 
 app.use("/*", cors());
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
+app.get("/api/students", (c) => {
+  return c.json("Hello Hono!");
 });
 
 const port = 3999;

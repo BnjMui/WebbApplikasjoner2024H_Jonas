@@ -1,22 +1,13 @@
 import Student, { StudentProps } from "./Student";
-import AddStudentForm from "./AddStudentForm";
+import { PropsWithChildren } from "react";
 type GridProps = {
   students: StudentProps[];
   setStudents: any;
   onRemoveStudent: (id: string) => void;
 };
 
-export default function Grid({
-  students,
-  setStudents,
-  onRemoveStudent,
-}: GridProps) {
-  const onAddStudent = (student: { name: string }) => {
-    setStudents((prev: StudentProps[]) => [
-      ...prev,
-      { id: crypto.randomUUID(), ...student },
-    ]);
-  };
+export default function Grid(props: PropsWithChildren<GridProps>) {
+  const { students, onRemoveStudent, children } = props;
   return (
     <section>
       <article className="grid">
@@ -29,7 +20,7 @@ export default function Grid({
           />
         ))}
       </article>
-      <AddStudentForm onAddStudent={onAddStudent} />
+      {children}
     </section>
   );
 }

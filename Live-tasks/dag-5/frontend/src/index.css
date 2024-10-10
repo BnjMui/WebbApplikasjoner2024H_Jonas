@@ -112,6 +112,13 @@ h1 {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+.students {
+  box-shadow: 2px 2px 7px hsla(0, 0%, 36%, 0.25);
+  padding: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
 
 .sr-only {
   position: absolute;
@@ -127,6 +134,7 @@ h1 {
 .delete-btn {
   background-color: red;
   color: white;
+  margin: auto;
 }
 
 @media (max-width: 768px) {
