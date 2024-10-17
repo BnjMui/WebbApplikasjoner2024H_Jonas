@@ -26,7 +26,7 @@ export default function AddStudentForm(props: AddStudentFormProps) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Legg til student</button>
       </form>
     </>
   );

@@ -117,7 +117,7 @@ h1 {
   padding: 0.5rem;
   display: flex;
   gap: 1rem;
-  justify-content: space-around;
+  align-items: center;
 }
 
 .sr-only {
@@ -135,6 +135,7 @@ h1 {
   background-color: red;
   color: white;
   margin: auto;
+  border-radius: 7px;
 }
 
 @media (max-width: 768px) {

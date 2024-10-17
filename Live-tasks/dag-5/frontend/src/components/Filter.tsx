@@ -12,7 +12,7 @@ export default function Filter(props: PropsWithChildren<FilterProps>) {
   };
   return (
     <section className="filter" onChange={handleFilter}>
-      <select value={filter}>
+      <select>
         {[{ id: "default", label: "-", value: "" }, ...options].map(
           ({ id, label, value }) => (
             <option key={id} value={value}>

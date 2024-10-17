@@ -4,6 +4,7 @@ import { StudentProps } from "./components/Student";
 import Total from "./components/Total";
 import Filter from "./components/Filter";
 import AddStudentForm from "./components/AddStudentForm";
+import Title from "./components/Title";
 
 const initialStudents = [
   {
@@ -19,7 +20,7 @@ const initialStudents = [
 function App() {
   const [filter, setFilter] = useState<string>("-");
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const [students, setStudents] = useState<StudentProps[]>(
     initialStudents ?? []
@@ -43,7 +44,25 @@ function App() {
         setLoading(false);
       }
     };
+
     fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    const AddStudent = async () => {
+      try {
+        const response = await fetch(`http://localhost:3999/api/students/:id`, {
+          method: "REMOVE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: "Kurt" }),
+        });
+      } catch (error) {
+        console.log("feil da");
+      }
+    };
+    AddStudent();
   }, []);
 
   const options = Array.from(
@@ -76,21 +95,26 @@ function App() {
   const total = students.length;
 
   return (
-    <main>
-      <Filter
-        filter={filter}
-        onFilterChange={onFilterChange}
-        options={Object.values(options)}
-      />
-      <Grid
-        students={filteredStudents}
-        setStudents={setStudents}
-        onRemoveStudent={onRemoveStudent}
-      >
-        <AddStudentForm onAddStudent={onAddStudent} />
-      </Grid>
-      <Total total={total} />
-    </main>
+    <>
+      <header>
+        <Title title={"Klasseliste"} />
+      </header>
+      <main>
+        <Filter
+          filter={filter}
+          onFilterChange={onFilterChange}
+          options={Object.values(options)}
+        />
+        <Grid
+          students={filteredStudents}
+          setStudents={setStudents}
+          onRemoveStudent={onRemoveStudent}
+        >
+          <AddStudentForm onAddStudent={onAddStudent} />
+        </Grid>
+        <Total total={total} />
+      </main>
+    </>
   );
 }
 
