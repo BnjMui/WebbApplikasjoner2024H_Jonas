@@ -12,3 +12,5 @@ export type Result<T> =
         message: string;
       };
     };
+
+// Promise<Result<Student[]>>
