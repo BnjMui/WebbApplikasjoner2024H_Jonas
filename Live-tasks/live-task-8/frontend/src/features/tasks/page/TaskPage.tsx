@@ -1,9 +1,9 @@
 import Task from "../components/Task";
 
-export default function TaskPage({ id }: { id: string }) {
+export default function TaskPage() {
   return (
     <>
-      <Task id={id} />
+      <Task />
     </>
   );
 }

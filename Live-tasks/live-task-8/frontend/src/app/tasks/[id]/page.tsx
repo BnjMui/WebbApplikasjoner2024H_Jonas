@@ -5,7 +5,7 @@ export default async function TaskList({ params }: { params: { id: string } }) {
   return (
     <>
       <h1>Task {id}</h1>
-      <TaskPage id={id} />
+      <TaskPage />
     </>
   );
 }
